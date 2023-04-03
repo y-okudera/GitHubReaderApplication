@@ -3,6 +3,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
     alias(libs.plugins.multiplatformSwiftpackage)
 }
@@ -72,4 +73,9 @@ android {
         minSdk = 26
         targetSdk = 32
     }
+}
+
+ktlint {
+    verbose.set(true)
+    outputToConsole.set(true)
 }
