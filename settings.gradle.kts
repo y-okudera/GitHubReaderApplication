@@ -19,3 +19,5 @@ include(":shared")
 include(":domain")
 include(":data")
 include(":application")
+
+enableFeaturePreview("VERSION_CATALOGS")

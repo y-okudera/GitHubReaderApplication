@@ -1,14 +1,14 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'domain'
     spec.version                  = '1.0'
-    spec.homepage                 = 'Link to the Shared Module homepage'
+    spec.homepage                 = ''
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'Some description for the Shared Module'
+    spec.summary                  = 'Domain Module'
     spec.vendored_frameworks      = 'build/cocoapods/framework/domain.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target = '14.1'
+    spec.ios.deployment_target = '14.0'
                 
                 
     spec.pod_target_xcconfig = {

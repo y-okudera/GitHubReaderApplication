@@ -1,7 +1,10 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.multiplatformSwiftpackage)
 }
 
 kotlin {
@@ -11,17 +14,22 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
+        summary = "Domain Module"
         version = "1.0"
-        ios.deploymentTarget = "14.1"
+        ios.deploymentTarget = "14.0"
         framework {
             baseName = "domain"
         }
     }
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.coroutinesCore)
+                implementation(libs.koinCore)
+                implementation(libs.ktorSerialization)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -46,6 +54,13 @@ kotlin {
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
+        }
+        multiplatformSwiftPackage {
+            packageName("Domain")
+            swiftToolsVersion("5.7")
+            targetPlatforms {
+                iOS { v("14") }
+            }
         }
     }
 }
