@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "GitHub_Reader_Application"
 include(":androidApp")
 include(":shared")
+include(":domain")
