@@ -55,7 +55,7 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
         multiplatformSwiftPackage {
-            packageName("Data")
+            packageName("Application")
             swiftToolsVersion("5.7")
             targetPlatforms {
                 iOS { v("14") }
@@ -71,4 +71,9 @@ android {
         minSdk = 26
         targetSdk = 32
     }
+}
+
+ktlint {
+    verbose.set(true)
+    outputToConsole.set(true)
 }
