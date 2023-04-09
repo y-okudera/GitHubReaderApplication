@@ -79,3 +79,9 @@ ktlint {
     verbose.set(true)
     outputToConsole.set(true)
 }
+
+kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
+    binaries.all {
+        binaryOptions["memoryModel"] = "experimental"
+    }
+}
