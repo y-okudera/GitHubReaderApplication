@@ -4,7 +4,6 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ktorfit)
     alias(libs.plugins.serialization)
     alias(libs.plugins.multiplatformSwiftpackage)
 }
@@ -30,7 +29,6 @@ kotlin {
                 implementation(project(":domain"))
                 implementation(libs.coroutinesCore)
                 implementation(libs.koinCore)
-                implementation(libs.ktorfit)
                 implementation(libs.ktorNegotiation)
                 implementation(libs.ktorJson)
                 implementation(libs.ktorLogging)

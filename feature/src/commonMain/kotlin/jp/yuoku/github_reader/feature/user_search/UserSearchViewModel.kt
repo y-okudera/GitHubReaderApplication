@@ -33,7 +33,7 @@ class UserSearchViewModel() : ViewModel(), KoinComponent {
 
         viewModelScope.launch {
 
-            gitHubUserSearchUseCase.searchGitHubUser("kmm", page).asResult().collectLatest { result ->
+            gitHubUserSearchUseCase.invoke("kmm", page).asResult().collectLatest { result ->
 
                 when (result) {
                     is Result.Error -> {
