@@ -26,6 +26,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":domain"))
+                implementation(libs.coroutinesCore)
                 implementation(libs.koinCore)
             }
         }

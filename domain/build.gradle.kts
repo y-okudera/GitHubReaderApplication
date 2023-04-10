@@ -28,6 +28,7 @@ kotlin {
             dependencies {
                 implementation(libs.coroutinesCore)
                 implementation(libs.koinCore)
+                implementation(libs.ktorCore)
                 implementation(libs.ktorSerialization)
             }
         }
