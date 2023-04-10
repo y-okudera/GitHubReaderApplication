@@ -4,10 +4,11 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ktorfit)
-    alias(libs.plugins.serialization)
     alias(libs.plugins.multiplatformSwiftpackage)
+    id("dev.icerock.moko.kswift")
 }
+
+val mokoMvvmVersion = "0.15.0"
 
 kotlin {
     android()
@@ -16,25 +17,23 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        summary = "Data Module"
+        summary = "Feature Module"
         version = "1.0"
         ios.deploymentTarget = "14.0"
         framework {
-            baseName = "data"
+            baseName = "feature"
         }
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":application"))
                 implementation(project(":domain"))
                 implementation(libs.coroutinesCore)
                 implementation(libs.koinCore)
-                implementation(libs.ktorfit)
-                implementation(libs.ktorNegotiation)
-                implementation(libs.ktorJson)
-                implementation(libs.ktorLogging)
-                implementation(libs.ktorSerialization)
+                api("dev.icerock.moko:mvvm-core:$mokoMvvmVersion")
+                api("dev.icerock.moko:mvvm-flow:$mokoMvvmVersion")
             }
         }
         val commonTest by getting {
@@ -44,7 +43,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.ktorOkhttp)
+                api("dev.icerock.moko:mvvm-flow-compose:$mokoMvvmVersion")
             }
         }
         val androidTest by getting
@@ -56,9 +55,6 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.ktorDarwin)
-            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -70,7 +66,7 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
         multiplatformSwiftPackage {
-            packageName("Data")
+            packageName("Feature")
             swiftToolsVersion("5.7")
             targetPlatforms {
                 iOS { v("14") }
@@ -80,7 +76,7 @@ kotlin {
 }
 
 android {
-    namespace = "jp.yuoku.github_reader.data"
+    namespace = "jp.yuoku.github_reader.feature"
     compileSdk = 32
     defaultConfig {
         minSdk = 26
@@ -91,4 +87,8 @@ android {
 ktlint {
     verbose.set(true)
     outputToConsole.set(true)
+}
+
+kswift {
+    install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature)
 }

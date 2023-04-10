@@ -21,3 +21,4 @@ include(":data")
 include(":application")
 
 enableFeaturePreview("VERSION_CATALOGS")
+include(":feature")

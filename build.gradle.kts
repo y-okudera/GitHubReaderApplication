@@ -9,3 +9,14 @@ plugins {
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
+
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("dev.icerock.moko:kswift-gradle-plugin:0.6.1")
+    }
+}
