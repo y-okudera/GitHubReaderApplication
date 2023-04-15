@@ -3,9 +3,12 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.multiplatformSwiftpackage)
+    id("org.jlleitschuh.gradle.ktlint")
+    id("com.chromaticnoise.multiplatform-swiftpackage")
+    id("dev.icerock.moko.kswift")
 }
+
+val mokoMvvmVersion = "0.15.0"
 
 kotlin {
     android()
@@ -15,6 +18,7 @@ kotlin {
 
     cocoapods {
         summary = "Shared Module"
+        homepage = "Link to the Shared Module homepage"
         version = "1.0"
         ios.deploymentTarget = "14.0"
         framework {
@@ -25,10 +29,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":domain"))
-                implementation(project(":application"))
-                implementation(project(":data"))
-                implementation(libs.koinCore)
+                implementation(project(":shared:application"))
+                implementation(project(":shared:data"))
+                implementation(project(":shared:domain"))
+                implementation(project(":shared:feature"))
+//                api(libs.coroutinesCore)
+                api(libs.koinCore)
             }
         }
         val commonTest by getting {
@@ -78,6 +84,11 @@ android {
 ktlint {
     verbose.set(true)
     outputToConsole.set(true)
+}
+
+kswift {
+    install(dev.icerock.moko.kswift.plugin.feature.PlatformExtensionFunctionsFeature)
+    install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature)
 }
 
 kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {

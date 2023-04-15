@@ -6,10 +6,6 @@ plugins {
     kotlin("multiplatform").version("1.7.10").apply(false)
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
-
 buildscript {
     repositories {
         mavenCentral()
@@ -19,4 +15,15 @@ buildscript {
     dependencies {
         classpath("dev.icerock.moko:kswift-gradle-plugin:0.6.1")
     }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
