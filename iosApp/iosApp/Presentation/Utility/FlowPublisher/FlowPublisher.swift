@@ -6,18 +6,16 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
-import Foundation
 import Combine
-//import feature
 import shared
 
-public extension Kotlinx_coroutines_coreFlow {
+extension Kotlinx_coroutines_coreFlow {
     func asPublisher<T: AnyObject>() -> AnyPublisher<T, Never> {
         (FlowPublisher(flow: self) as FlowPublisher<T>).eraseToAnyPublisher()
     }
 }
 
-struct FlowPublisher<T: Any> : Publisher {
+private struct FlowPublisher<T: Any>: Publisher {
     public typealias Output = T
     public typealias Failure = Never
     private let flow: Kotlinx_coroutines_coreFlow

@@ -24,10 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jp.yuoku.github_reader.shared.application.use_case.GitHubUserSearchUseCase
+import jp.yuoku.github_reader.application.use_case.GitHubUserSearchUseCase
 
 import jp.yuoku.github_reader.di.sharedModule
-import jp.yuoku.github_reader.shared.domain.model.entity.GitHubUser
+import jp.yuoku.github_reader.domain.model.entity.GitHubUser
 import kotlinx.coroutines.Job
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin

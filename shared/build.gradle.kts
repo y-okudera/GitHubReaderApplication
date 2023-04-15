@@ -6,6 +6,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
     id("com.chromaticnoise.multiplatform-swiftpackage")
     id("dev.icerock.moko.kswift")
+    alias(libs.plugins.serialization)
 }
 
 val mokoMvvmVersion = "0.15.0"
@@ -29,12 +30,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":shared:application"))
-                implementation(project(":shared:data"))
-                implementation(project(":shared:domain"))
-                implementation(project(":shared:feature"))
-//                api(libs.coroutinesCore)
-                api(libs.koinCore)
+                implementation(libs.coroutinesCore)
+                implementation(libs.koinCore)
+                implementation(libs.ktorCore)
+                implementation(libs.ktorNegotiation)
+                implementation(libs.ktorJson)
+                implementation(libs.ktorLogging)
+                implementation(libs.ktorSerialization)
+                api("dev.icerock.moko:mvvm-core:$mokoMvvmVersion")
+                api("dev.icerock.moko:mvvm-flow:$mokoMvvmVersion")
             }
         }
         val commonTest by getting {
@@ -42,7 +46,12 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.ktorOkhttp)
+                api("dev.icerock.moko:mvvm-flow-compose:$mokoMvvmVersion")
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -52,6 +61,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktorDarwin)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -94,5 +106,6 @@ kswift {
 kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
     binaries.all {
         binaryOptions["memoryModel"] = "experimental"
+        binaryOptions["freezing"] = "disabled"
     }
 }

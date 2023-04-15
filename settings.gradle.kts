@@ -21,9 +21,5 @@ dependencyResolutionManagement {
 rootProject.name = "GitHub_Reader_Application"
 include(":androidApp")
 include(":shared")
-include(":shared:application")
-include(":shared:data")
-include(":shared:domain")
-include(":shared:feature")
 
 enableFeaturePreview("VERSION_CATALOGS")
