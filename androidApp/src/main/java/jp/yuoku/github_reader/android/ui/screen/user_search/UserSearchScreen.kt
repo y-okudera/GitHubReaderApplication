@@ -1,19 +1,32 @@
 package jp.yuoku.github_reader.android.ui.screen.user_search
 
 import android.util.Log
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumedWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -24,15 +37,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
-import jp.yuoku.github_reader.domain.model.entity.GitHubUser
-import jp.yuoku.github_reader.feature.user_search.UserSearchUiState
-import jp.yuoku.github_reader.feature.user_search.UserSearchViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import jp.yuoku.github_reader.android.R
+import jp.yuoku.github_reader.android.ui.components.AppBar
 import jp.yuoku.github_reader.android.ui.components.SearchBarUI
+import jp.yuoku.github_reader.domain.model.entity.GitHubUser
 import jp.yuoku.github_reader.feature.user_search.UserSearchAction
+import jp.yuoku.github_reader.feature.user_search.UserSearchUiState
+import jp.yuoku.github_reader.feature.user_search.UserSearchViewModel
 import org.koin.androidx.compose.getViewModel
 
 @RootNavGraph(start = true)
@@ -50,21 +64,28 @@ fun UserSearchScreen(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
-    ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalLayoutApi::class,
 )
-private fun UserSearchScreen(viewModel: UserSearchViewModel, state: UserSearchUiState, destinationsNavigator: DestinationsNavigator) {
+private fun UserSearchScreen(
+    viewModel: UserSearchViewModel,
+    state: UserSearchUiState,
+    destinationsNavigator: DestinationsNavigator
+) {
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
+        AppBar(titleRes = R.string.app_heading, actionIcons = {})
     }) { innerPadding ->
 
         SearchBarUI(
-            searchText = viewModel.searchText.value,
             placeholderText = stringResource(id = R.string.search_user),
-            onSearchTextChanged = {
+            topPadding = innerPadding.calculateTopPadding(),
+            onSearchClick = {
                 viewModel.onIntent(UserSearchAction.OnSearchTextChanged(it))
-                viewModel.onIntent(UserSearchAction.SearchUsers) },
-            onClearClick = { viewModel.onIntent(UserSearchAction.ClearText) },
-            matchesFound = viewModel.users.value.isNotEmpty()
+                viewModel.onIntent(UserSearchAction.SearchUsers)
+            },
+            matchesFound = viewModel.users.value.isNotEmpty(),
+            isLoading = state is UserSearchUiState.Loading
         ) {
 
             val listState = rememberLazyListState()
@@ -75,13 +96,8 @@ private fun UserSearchScreen(viewModel: UserSearchViewModel, state: UserSearchUi
                 contentPadding = PaddingValues(16.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
                     .consumedWindowInsets(innerPadding)
             ) {
-                item {
-                    Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                }
-
                 when (state) {
                     is UserSearchUiState.Error -> {
                         item {
@@ -91,11 +107,14 @@ private fun UserSearchScreen(viewModel: UserSearchViewModel, state: UserSearchUi
                             )
                         }
                     }
+
                     UserSearchUiState.Idle -> {
                     }
+
                     UserSearchUiState.Loading -> {
                         placeholder()
                     }
+
                     is UserSearchUiState.Success -> {
                         users(state.users.items, destinationsNavigator)
                     }
@@ -104,7 +123,6 @@ private fun UserSearchScreen(viewModel: UserSearchViewModel, state: UserSearchUi
         }
     }
 }
-
 
 fun LazyListScope.users(
     users: List<GitHubUser>, destinationsNavigator: DestinationsNavigator
@@ -125,7 +143,8 @@ fun LazyListScope.placeholder() {
 
 @Composable
 fun UsersCard(
-    user: GitHubUser, modifier: Modifier = Modifier
+    user: GitHubUser,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,

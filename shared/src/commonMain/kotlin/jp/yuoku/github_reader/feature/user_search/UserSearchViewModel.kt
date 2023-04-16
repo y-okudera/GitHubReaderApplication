@@ -48,6 +48,13 @@ class UserSearchViewModel : ViewModel(), KoinComponent {
 
         viewModelScope.launch {
 
+            if (_searchText.value.isEmpty()) {
+                _state.update {
+                    UserSearchUiState.Idle
+                }
+                return@launch
+            }
+
             gitHubUserSearchUseCase.invoke(_searchText.value, page).asResult().collectLatest { result ->
 
                 when (result) {
