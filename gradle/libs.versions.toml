@@ -8,8 +8,8 @@ serialization = "1.6.21"
 
 [libraries]
 coroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesCore" }
+koinAndroid = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koinCore = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-
 ktorCore = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktorDarwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktorJson = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }

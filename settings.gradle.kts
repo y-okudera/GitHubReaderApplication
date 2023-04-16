@@ -4,6 +4,11 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
+    plugins {
+        id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+        id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
+        id("dev.icerock.moko.kswift") version "0.6.1"
+    }
 }
 
 dependencyResolutionManagement {
@@ -16,8 +21,5 @@ dependencyResolutionManagement {
 rootProject.name = "GitHub_Reader_Application"
 include(":androidApp")
 include(":shared")
-include(":domain")
-include(":data")
-include(":application")
 
 enableFeaturePreview("VERSION_CATALOGS")
