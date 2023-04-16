@@ -18,15 +18,18 @@ struct UserSearchScreen: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(searchText: $query, placeholder: "ユーザ検索", onSearchButtonClicked: {
-                    state.viewModel.onIntent(intent: UserSearchActionSearchUsers(query: query))
+                SearchBar(searchText: $query, placeholder: "ユーザ検索", textDidChange: { text in
+                    state.viewModel.onIntent(intent: UserSearchActionOnSearchTextChanged(text: text))
+                }, onSearchButtonClicked: {
+                    state.viewModel.onIntent(intent: UserSearchActionSearchUsers())
                 })
+
                 switch state.state {
-                case is UserSearchStateError:
-                    Text((state.state as! UserSearchStateError).errorMessage)
-                case is UserSearchStateSuccess:
+                case is UserSearchUiStateError:
+                    Text((state.state as! UserSearchUiStateError).errorMessage)
+                case is UserSearchUiStateSuccess:
                     List{
-                        ForEach((state.state as! UserSearchStateSuccess).users.items , id: \.self) { item in
+                        ForEach((state.state as! UserSearchUiStateSuccess).users.items , id: \.self) { item in
                             UserRow(user: item)
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -34,7 +37,7 @@ struct UserSearchScreen: View {
                     .frame( maxWidth: .infinity)
                     .listStyle(PlainListStyle())
 
-                case is UserSearchStateLoading:
+                case is UserSearchUiStateLoading:
                     ProgressView()
                     Spacer()
 

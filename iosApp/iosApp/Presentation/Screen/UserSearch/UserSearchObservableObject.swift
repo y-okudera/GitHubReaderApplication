@@ -14,14 +14,14 @@ final class UserSearchObservableObject: ObservableObject {
     var viewModel: UserSearchViewModel
 
     /// state flow acts as a state for swift ui here
-    @Published private(set) var state: UserSearchState
+    @Published private(set) var state: UserSearchUiState
 
     /// fusing the .asObserveable extension funstion we get the wrapped viewmodel and the stateflow
     init(wrapped: UserSearchViewModel) {
 
         viewModel = wrapped
-        state = wrapped.state.value as! UserSearchState
-        (wrapped.state.asPublisher() as AnyPublisher<UserSearchState, Never>)
+        state = wrapped.state.value as! UserSearchUiState
+        (wrapped.state.asPublisher() as AnyPublisher<UserSearchUiState, Never>)
             .receive(on: RunLoop.main)
             .assign(to: &$state)
     }

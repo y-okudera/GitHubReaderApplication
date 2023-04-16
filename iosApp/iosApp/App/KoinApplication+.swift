@@ -17,7 +17,9 @@ extension KoinApplication {
         \.apiClient, \.gitHubUserSearchRepository, \.gitHubUserSearchUseCase, \.userSearchViewModel,
     ]
 
-    static let shared = KoinHelperKt.doInitKoin()
+    static let shared = KoinHelperKt.doInitKoin { koinApplication in
+
+    }
 
     @discardableResult
     static func start() -> KoinApplication {

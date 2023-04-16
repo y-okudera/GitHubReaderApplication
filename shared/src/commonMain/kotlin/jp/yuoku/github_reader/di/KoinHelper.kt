@@ -8,9 +8,13 @@ import jp.yuoku.github_reader.data.remote.api.GitHubUserSearchApi
 import jp.yuoku.github_reader.feature.user_search.UserSearchViewModel
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
+import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
-fun initKoin() = startKoin {
+fun initKoin(
+    appDeclaration: KoinAppDeclaration = {}
+) = startKoin {
+    appDeclaration()
     modules(
         listOf(
             module {
