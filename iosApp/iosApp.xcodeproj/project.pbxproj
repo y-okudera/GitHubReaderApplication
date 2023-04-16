@@ -15,19 +15,19 @@
 		B63CBB9E29E47531006152B5 /* FlowPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CBB9D29E47531006152B5 /* FlowPublisher.swift */; };
 		B63CBBB529E4EF8D006152B5 /* KoinApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63CBBB429E4EF8D006152B5 /* KoinApplication+.swift */; };
 		B64D75AA29EACCA600844EFC /* UserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D75A929EACCA600844EFC /* UserRow.swift */; };
-		B6A1391529EBBECE0050E8CD /* Shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63CBB9829E47489006152B5 /* Shared.xcframework */; };
-		B6A1391629EBBECE0050E8CD /* Shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B63CBB9829E47489006152B5 /* Shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B67B28D729EC0E1A00B995F9 /* Shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63CBB9829E47489006152B5 /* Shared.xcframework */; };
+		B67B28D829EC0E1A00B995F9 /* Shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B63CBB9829E47489006152B5 /* Shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6D779A429EAC536000CF369 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D779A329EAC536000CF369 /* SearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B6A1391729EBBECE0050E8CD /* Embed Frameworks */ = {
+		B67B28D929EC0E1A00B995F9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B6A1391629EBBECE0050E8CD /* Shared.xcframework in Embed Frameworks */,
+				B67B28D829EC0E1A00B995F9 /* Shared.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6A1391529EBBECE0050E8CD /* Shared.xcframework in Frameworks */,
+				B67B28D729EC0E1A00B995F9 /* Shared.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +204,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				DC3E3BCFA2AD957B65B75B36 /* Frameworks */,
-				B6A1391729EBBECE0050E8CD /* Embed Frameworks */,
+				B67B28D929EC0E1A00B995F9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
