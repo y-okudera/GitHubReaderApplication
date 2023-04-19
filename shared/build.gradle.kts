@@ -2,14 +2,19 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id("org.jlleitschuh.gradle.ktlint")
-    id("com.chromaticnoise.multiplatform-swiftpackage")
-    id("dev.icerock.moko.kswift")
-    @Suppress("DSL_SCOPE_VIOLATION")
-    alias(libs.plugins.serialization)
+    with(Ktlint) {
+        id(ktlint) version version
+    }
+    with(Moko) {
+        id(kswift) version kswiftVersion
+    }
+    with(MultiplatformSwiftpackage) {
+        id(multiplatformSwiftpackage) version version
+    }
+    with(Serialization) {
+        id(serialization) version version
+    }
 }
-
-val mokoMvvmVersion = "0.15.0"
 
 kotlin {
     android()
@@ -31,15 +36,23 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.coroutinesCore)
-                implementation(libs.koinCore)
-                implementation(libs.ktorCore)
-                implementation(libs.ktorNegotiation)
-                implementation(libs.ktorJson)
-                implementation(libs.ktorLogging)
-                implementation(libs.ktorSerialization)
-                api("dev.icerock.moko:mvvm-core:$mokoMvvmVersion")
-                api("dev.icerock.moko:mvvm-flow:$mokoMvvmVersion")
+                with(Coroutines) {
+                    implementation(coroutinesCore)
+                }
+                with(Koin) {
+                    implementation(koinShared)
+                }
+                with(Ktor) {
+                    implementation(ktorCore)
+                    implementation(ktorJson)
+                    implementation(ktorLogging)
+                    implementation(ktorNegotiation)
+                    implementation(ktorSerialization)
+                }
+                with(Moko) {
+                    api(mvvmCore)
+                    api(mvvmFlow)
+                }
             }
         }
         val commonTest by getting {
@@ -49,8 +62,12 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.ktorOkhttp)
-                api("dev.icerock.moko:mvvm-flow-compose:$mokoMvvmVersion")
+                with(Ktor) {
+                    implementation(ktorOkhttp)
+                }
+                with(Moko) {
+                    api(mvvmFlowCompose)
+                }
             }
         }
         // Workaround for:
@@ -80,7 +97,9 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(libs.ktorDarwin)
+                with(Ktor) {
+                    implementation(ktorDarwin)
+                }
             }
         }
         val iosX64Test by getting
