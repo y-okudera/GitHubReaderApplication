@@ -2,8 +2,12 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    alias(libs.plugins.ktlint)
-    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    with(Ksp) {
+        id(ksp) version version
+    }
+    with(Ktlint) {
+        id(ktlint) version version
+    }
 }
 
 android {
@@ -43,50 +47,42 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.ui:ui-tooling:1.2.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
-    implementation("androidx.compose.foundation:foundation:1.2.1")
-    implementation("androidx.compose.material:material:1.2.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
-    implementation(libs.koinAndroid)
-    implementation(libs.koinCore)
-
     with(Accompanist) {
         implementation(coil)
         implementation(webview)
     }
     with(Compose) {
-        implementation(util){
-
-        }
         implementation(composeActivity) {
             because("We are not using  xml its better to use compose activity ")
         }
-
-
-        implementation(composeToolingDebug){
-            because("Supports preview of composables")
+        implementation(composeFoundation) {
+            because("Supports compose ")
         }
-
+        implementation(composeMaterial) {
+            because("Supports compose ")
+        }
         debugImplementation(composeToolingDebug) {
-
             because("Supports previews and other tooling stuff." )
+        }
+        implementation(composeToolingPreview) {
+            because("Supports preview of composables")
         }
         implementation(composeUI) {
             because("Supports compose ")
         }
+        implementation(util) {
+        }
     }
     with(ComposeDestination) {
-
         implementation(composeDestination)
         ksp(composeDestinationPlugin)
+    }
+    with(Koin) {
+        implementation(koin)
+        implementation(koinAndroid)
     }
     with(Material3) {
         implementation(material3)
         implementation(window)
-    }
-    with(Koin){
-        implementation(koinAndroid)
     }
 }
